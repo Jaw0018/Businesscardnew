@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SmartTap NFC Card - Offline</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -19,11 +19,11 @@ body {
 .card {
   min-height: 100vh;
   padding: 20px 16px 40px;
+  text-align: center;
 }
 
 /* Header */
 .header {
-  text-align: center;
   font-size: 22px;
   font-weight: 600;
   color: gold;
@@ -31,11 +31,6 @@ body {
 }
 
 /* Profile */
-.profile {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
 .profile img {
   width: 120px;
   height: 120px;
@@ -61,6 +56,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  margin-top: 20px;
 }
 
 .link {
@@ -91,24 +87,23 @@ body {
 /* Save Button */
 .save {
   margin-top: 28px;
-  text-align: center;
 }
 
-.save a {
+.save button {
   display: inline-block;
   background: linear-gradient(135deg, gold, #c9a227);
   color: #000;
   padding: 14px 30px;
   border-radius: 30px;
-  text-decoration: none;
+  border: none;
   font-weight: 600;
   font-size: 14px;
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  cursor: pointer;
 }
 
 /* Footer */
 .footer {
-  text-align: center;
   font-size: 11px;
   color: #777;
   margin-top: 30px;
@@ -118,80 +113,70 @@ body {
 <body>
 
 <div class="card">
-
   <div class="header">Digital Profile</div>
 
   <div class="profile">
-    <!-- CHANGE IMAGE -->
-    <img src="profile.jpg" alt="Profile">
+    <!-- Base64 Image for Offline -->
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAADH" alt="Profile">
     <h2>Juan Dela Cruz</h2>
     <p>ABC Company • Marketing Manager</p>
   </div>
 
   <div class="links">
-
-    <a class="link" href="tel:+639000000000">
-      <i class="fa-solid fa-phone"></i> Call
-    </a>
-
-    <a class="link" href="mailto:juan@email.com">
-      <i class="fa-solid fa-envelope"></i> Email
-    </a>
-
-    <a class="link" href="facebook.html">
-      <i class="fa-brands fa-facebook"></i> Facebook
-    </a>
-
-    <a class="link" href="instagram.html">
-      <i class="fa-brands fa-instagram"></i> Instagram
-    </a>
-
-    <a class="link" href="website.html">
-      <i class="fa-solid fa-globe"></i> Website
-    </a>
-
+    <a class="link" href="tel:+639000000000"><i class="fa-solid fa-phone"></i> Call</a>
+    <a class="link" href="mailto:juan@email.com"><i class="fa-solid fa-envelope"></i> Email</a>
+    <a class="link" href="#" onclick="alert('Facebook offline demo')"><i class="fa-brands fa-facebook"></i> Facebook</a>
+    <a class="link" href="#" onclick="alert('Instagram offline demo')"><i class="fa-brands fa-instagram"></i> Instagram</a>
+    <a class="link" href="#" onclick="alert('Website offline demo')"><i class="fa-solid fa-globe"></i> Website</a>
   </div>
 
   <div class="save">
-    <a href="contact.vcf" download>Save Contact</a>
+    <button onclick="downloadVCard()">Save Contact</button>
   </div>
 
   <div class="footer">
     Powered by SmartTap PH - Offline Mode
   </div>
-
 </div>
 
-<!-- Offline Service Worker Script -->
 <script>
+// Offline VCF download
+function downloadVCard() {
+  const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:Juan Dela Cruz
+ORG:ABC Company
+TITLE:Marketing Manager
+TEL;TYPE=CELL:+639000000000
+EMAIL:juan@email.com
+END:VCARD`;
+
+  const blob = new Blob([vCardData], { type: 'text/vcard' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'JuanDelaCruz.vcf';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Optional: Service Worker for caching the HTML page
 if ('serviceWorker' in navigator) {
   const swCode = `
     const cacheName = 'smarttap-offline-v1';
     const assetsToCache = [
       '/',
-      location.pathname,
-      'profile.jpg',
-      'contact.vcf'
     ];
-
     self.addEventListener('install', event => {
-      event.waitUntil(
-        caches.open(cacheName).then(cache => cache.addAll(assetsToCache))
-      );
+      event.waitUntil(caches.open(cacheName).then(cache => cache.addAll(assetsToCache)));
     });
-
     self.addEventListener('fetch', event => {
-      event.respondWith(
-        caches.match(event.request).then(response => response || fetch(event.request))
-      );
+      event.respondWith(caches.match(event.request).then(resp => resp || fetch(event.request)));
     });
   `;
-
   const blob = new Blob([swCode], {type: 'application/javascript'});
   const swUrl = URL.createObjectURL(blob);
-
-  navigator.serviceWorker.register(swUrl)
-    .then(() => console.log('Offline Service Worker Registered!'));
+  navigator.serviceWorker.register(swUrl).then(() => console.log('Offline Service Worker Registered'));
 }
 </script>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartTap NFC Card - Offline Premium</title>
+<title>SmartTap NFC Card</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -172,16 +172,16 @@ body {
   <div class="header">Digital Profile</div>
 
   <div class="profile">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAADH..." alt="Profile">
-    <h2>Juan Dela Cruz</h2>
-    <p>ABC Company • Marketing Manager</p>
+ <img src="profile-1.jpg" alt="Profile">
+    <h2>Joemarie Pangan</h2>
+    <p>Oligarch Media • Graphic Designer</p>
   </div>
 
   <div class="links">
-    <div class="link" onclick="callNumber('+639000000000')"><i class="fa-solid fa-phone"></i> Call</div>
-    <div class="link" onclick="sendEmail('juan@email.com')"><i class="fa-solid fa-envelope"></i> Email</div>
-    <div class="link" onclick="openModal('Facebook','https://facebook.com')"><i class="fa-brands fa-facebook"></i> Facebook</div>
-    <div class="link" onclick="openModal('Instagram','https://instagram.com')"><i class="fa-brands fa-instagram"></i> Instagram</div>
+    <div class="link" onclick="callNumber('+639923279475')"><i class="fa-solid fa-phone"></i> Call</div>
+    <div class="link" onclick="sendEmail('jaopangan.oligarchmedia@gmail.com')"><i class="fa-solid fa-envelope"></i> Email</div>
+    <div class="link" onclick="openModal('Facebook','https://facebook.com/jaopangan18')"><i class="fa-brands fa-facebook"></i> Facebook</div>
+    <div class="link" onclick="openModal('Instagram','https://instagram.com/good.jaoo')"><i class="fa-brands fa-instagram"></i> Instagram</div>
     <div class="link" onclick="openModal('Website','https://yourwebsite.com')"><i class="fa-solid fa-globe"></i> Website</div>
   </div>
 
@@ -220,18 +220,18 @@ function closeModal(){ document.getElementById('modal').style.display = 'none'; 
 function downloadVCard() {
   const vCardData = `BEGIN:VCARD
 VERSION:3.0
-FN:Juan Dela Cruz
-ORG:ABC Company
-TITLE:Marketing Manager
-TEL;TYPE=CELL:+639000000000
-EMAIL:juan@email.com
+FN:Joemarie Pangan
+ORG:Oligarch Media
+TITLE:Graphic Designer
+TEL;TYPE=CELL:+639923279475
+EMAIL:jaopangan.oligarchmedia@gmail.com
 END:VCARD`;
 
   const blob = new Blob([vCardData], { type: 'text/vcard' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'JuanDelaCruz.vcf';
+  a.download = 'JoemariePangan.vcf';
   a.click();
   URL.revokeObjectURL(url);
 }

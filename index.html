@@ -147,24 +147,34 @@ body {
 </div>
 
 <script>
-// Download VCard
+// Automatically create VCard from the info on the page
 function downloadVCard() {
+  // Get info from the page
+  const fullName = document.querySelector('.profile h2').innerText;
+  const orgTitle = document.querySelector('.profile p').innerText; // e.g., "Oligarch Media • Graphic Designer"
+  const [org, title] = orgTitle.split('•').map(s => s.trim()); // split org and title
+  const phone = document.querySelector('.link[href^="tel:"]').getAttribute('href').replace('tel:', '');
+  const email = document.querySelector('.link[href^="mailto:"]').getAttribute('href').replace('mailto:', '');
+
+  // Create VCard
   const vCardData = `BEGIN:VCARD
 VERSION:3.0
-FN:Joemarie Pangan
-ORG:Oligarch Media
-TITLE:Graphic Designer
-TEL;TYPE=CELL:+639923279475
-EMAIL:jaopangan.oligarchmedia@gmail.com
+FN:${fullName}
+ORG:${org}
+TITLE:${title}
+TEL;TYPE=CELL:${phone}
+EMAIL:${email}
 END:VCARD`;
 
+  // Create blob and open automatically
   const blob = new Blob([vCardData], { type: 'text/vcard' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'JoemariePangan.vcf';
-  a.click();
-  URL.revokeObjectURL(url);
+
+  // Trigger download / open on mobile
+  window.location.href = url;
+
+  // Cleanup
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 </script>
 

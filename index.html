@@ -147,16 +147,13 @@ body {
 </div>
 
 <script>
-// Automatically create VCard from the info on the page
 function downloadVCard() {
-  // Get info from the page
   const fullName = document.querySelector('.profile h2').innerText;
-  const orgTitle = document.querySelector('.profile p').innerText; // e.g., "Oligarch Media • Graphic Designer"
-  const [org, title] = orgTitle.split('•').map(s => s.trim()); // split org and title
-  const phone = document.querySelector('.link[href^="tel:"]').getAttribute('href').replace('tel:', '');
-  const email = document.querySelector('.link[href^="mailto:"]').getAttribute('href').replace('mailto:', '');
+  const orgTitle = document.querySelector('.profile p').innerText;
+  const [org, title] = orgTitle.split('•').map(s => s.trim());
+  const phone = document.querySelector('a[href^="tel:"]').href.replace('tel:', '');
+  const email = document.querySelector('a[href^="mailto:"]').href.replace('mailto:', '');
 
-  // Create VCard
   const vCardData = `BEGIN:VCARD
 VERSION:3.0
 FN:${fullName}
@@ -166,17 +163,16 @@ TEL;TYPE=CELL:${phone}
 EMAIL:${email}
 END:VCARD`;
 
-  // Create blob and open automatically
   const blob = new Blob([vCardData], { type: 'text/vcard' });
   const url = URL.createObjectURL(blob);
 
-  // Trigger download / open on mobile
+  // This opens the Contacts app on mobile
   window.location.href = url;
 
-  // Cleanup
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
 </script>
+
 
 </body>
 </html>

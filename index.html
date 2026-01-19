@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SmartTap NFC Card</title>
 
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* Body */
 body {
   margin: 0;
   font-family: "Poppins", Arial, sans-serif;
@@ -21,7 +21,6 @@ body {
   padding: 20px;
 }
 
-/* Card */
 .card {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
@@ -33,7 +32,6 @@ body {
   text-align: center;
 }
 
-/* Header */
 .header {
   font-size: 22px;
   font-weight: 600;
@@ -41,7 +39,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* Profile */
 .profile img {
   width: 120px;
   height: 120px;
@@ -62,7 +59,6 @@ body {
   color: #bbb;
 }
 
-/* Links */
 .links {
   display: flex;
   flex-direction: column;
@@ -97,7 +93,6 @@ body {
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
 
-/* Save Button */
 .save {
   margin-top: 28px;
 }
@@ -115,54 +110,10 @@ body {
   cursor: pointer;
 }
 
-/* Footer */
 .footer {
   font-size: 11px;
   color: #777;
   margin-top: 30px;
-}
-
-/* Modal */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #111;
-  padding: 20px;
-  border-radius: 16px;
-  max-width: 300px;
-  width: 90%;
-  color: #fff;
-  text-align: left;
-}
-
-.modal-content h3 {
-  margin-top: 0;
-  color: gold;
-}
-
-.modal-content p {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.modal-close {
-  display: block;
-  text-align: right;
-  cursor: pointer;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: gold;
 }
 </style>
 </head>
@@ -172,17 +123,18 @@ body {
   <div class="header">Digital Profile</div>
 
   <div class="profile">
- <img src="profile-1.jpg" alt="Profile">
+    <!-- Use an online image -->
+    <img src="profile-1.jpg" alt="Profile">
     <h2>Joemarie Pangan</h2>
     <p>Oligarch Media • Graphic Designer</p>
   </div>
 
   <div class="links">
-    <div class="link" onclick="callNumber('+639923279475')"><i class="fa-solid fa-phone"></i> Call</div>
-    <div class="link" onclick="sendEmail('jaopangan.oligarchmedia@gmail.com')"><i class="fa-solid fa-envelope"></i> Email</div>
-    <div class="link" onclick="openModal('Facebook','https://facebook.com/jaopangan18')"><i class="fa-brands fa-facebook"></i> Facebook</div>
-    <div class="link" onclick="openModal('Instagram','https://instagram.com/good.jaoo')"><i class="fa-brands fa-instagram"></i> Instagram</div>
-    <div class="link" onclick="openModal('Website','https://yourwebsite.com')"><i class="fa-solid fa-globe"></i> Website</div>
+    <a class="link" href="tel:+639923279475"><i class="fa-solid fa-phone"></i> Call</a>
+    <a class="link" href="mailto:jaopangan.oligarchmedia@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+    <a class="link" href="https://facebook.com/jaopangan18" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a>
+    <a class="link" href="https://instagram.com/good.jaoo" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+    <a class="link" href="https://yourwebsite.com" target="_blank"><i class="fa-solid fa-globe"></i> Website</a>
   </div>
 
   <div class="save">
@@ -190,33 +142,12 @@ body {
   </div>
 
   <div class="footer">
-    Powered by SmartTap PH - Offline Mode
-  </div>
-</div>
-
-<!-- Modal for offline social pages -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="modal-close" onclick="closeModal()">✖</span>
-    <h3 id="modal-title"></h3>
-    <p id="modal-text"></p>
+    Powered by SmartTap PH
   </div>
 </div>
 
 <script>
-// Call & Email functions
-function callNumber(number){ window.location.href = 'tel:' + number; }
-function sendEmail(email){ window.location.href = 'mailto:' + email; }
-
-// Modal functions
-function openModal(title,text){
-  document.getElementById('modal-title').innerText = title;
-  document.getElementById('modal-text').innerHTML = 'This is an offline demo for ' + title + '.<br><br>Link: ' + text;
-  document.getElementById('modal').style.display = 'flex';
-}
-function closeModal(){ document.getElementById('modal').style.display = 'none'; }
-
-// Download VCard offline
+// Download VCard
 function downloadVCard() {
   const vCardData = `BEGIN:VCARD
 VERSION:3.0
